@@ -12,33 +12,30 @@
         $userPhoneNumber = $this->sanitize($userPhoneNumber, 'int');
 
 
-        // name validation
-
-
-
-        // Name validation 
-        if ($fullname == '') {
-            $error[] = 'Please enter your Name';
+        // Name validation
+        if ($fullname === '') {
+            $error[] = 'Please enter your name';
+        } elseif (!preg_match('/^[a-zA-Z\s\']+$/', $fullname)) {
+            $error[] = "Name must only contain alphabets, spaces, and '";
         }
-        if (strlen($fullname) <= 2) { // Minimum 
-            $error[] = 'Please enter Name using 3 charaters atleast.';
-        }
-
 
       
 
-        if ($emailid == '') {
-            $error[] = 'Please enter the email address.';
-        }
-        if ($emailid != '') {
-            if (!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i", $emailid)) {
-                $error[] = 'Invalid Entry for Email.ie- username@domain.com';
-            }
+        // Email validation
+        if ($emailid === '') {
+            $error[] = 'Please enter your email address';
+        } elseif (!filter_var($emailid, FILTER_VALIDATE_EMAIL)) {
+            $error[] = 'Invalid email address';
         }
 
-        if ($userPhoneNumber== '') {
-            $error[] = 'Please enter phone number.';
+
+        // Phone number validation
+        if ($userPhoneNumber === '') {
+            $error[] = 'Please enter your phone number';
+        } elseif (!preg_match('/^(?:\+91|0)?[1-9][0-9]{9}$/', $userPhoneNumber)) {
+            $error[] = 'Invalid phone number format. Please enter a valid Indian mobile number.';
         }
+
 
 
         if (isset($error)) {

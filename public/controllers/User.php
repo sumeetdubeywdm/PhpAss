@@ -5,36 +5,24 @@
 
     public function validation($fullname, $username, $emailid, $userPhoneNumber, $gender, $userPassword, $cfmUserPassword)
     {
-
         $fullname = $this->sanitize($fullname, 'string');
         $username = $this->sanitize($username, 'string');
         $emailid = $this->sanitize($emailid, 'email');
-        $userPhoneNumber = $this->sanitize($userPhoneNumber, 'int');
+        $userPhoneNumber = $this->sanitize($userPhoneNumber, 'string');
         $gender = $this->sanitize($gender, 'string');
         $userPassword = $this->sanitize($userPassword, 'string');
         $cfmUserPassword = $this->sanitize($cfmUserPassword, 'string');
-
-        // name validation
-
-
-
-        // Name validation 
-        if ($fullname == '') {
-            $error[] = 'Please enter your Name';
-        }
-        if (strlen($fullname) <= 2) { // Minimum 
-            $error[] = 'Please enter Name using 3 charaters atleast.';
-        }
-
-        // name validation end
-
-        /// Username 
-
-        if ($username == '') {
+    
+        $error = array();
+    
+        // Username validation
+        if ($username === '') {
             $error[] = 'Please enter your username';
+        } elseif (!preg_match('/^[a-zA-Z0-9]{4,10}$/', $username)) {
+            $error[] = 'Username must be alphanumeric and have 4 to 10 characters';
         }
 
-        $count_username = $sql = "SELECT count(*) FROM users WHERE username=:username";
+        $sql = "SELECT count(*) FROM users WHERE username=:username";
         $stmt = $this->dbConnection->prepare($sql);
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
         $stmt->execute();
@@ -42,31 +30,20 @@
         if ($count_username > 0) {
             $error[] = 'Username  already exists.';
         }
-        /// Username
-
-        if ($emailid == '') {
-            $error[] = 'Please enter the email address.';
+    
+        // Name validation
+        if ($fullname === '') {
+            $error[] = 'Please enter your name';
+        } elseif (!preg_match('/^[a-zA-Z\s\']+$/', $fullname)) {
+            $error[] = "Name must only contain alphabets, spaces, and '";
         }
-        if ($emailid != '') {
-            if (!preg_match("/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,})$/i", $emailid)) {
-                $error[] = 'Invalid Entry for Email.ie- username@domain.com';
-            }
+    
+        // Phone number validation
+        if ($userPhoneNumber === '') {
+            $error[] = 'Please enter your phone number';
+        } elseif (!preg_match('/^(?:\+91|0)?[1-9][0-9]{9}$/', $userPhoneNumber)) {
+            $error[] = 'Invalid phone number format. Please enter a valid Indian mobile number.';
         }
-
-
-
-        $count_username = $sql = "SELECT count(*) FROM users WHERE emailid=:emailid";
-        $stmt = $this->dbConnection->prepare($sql);
-        $stmt->bindParam(':email', $emailid, PDO::PARAM_STR);
-        $stmt->execute();
-
-        $count_email = $stmt->fetchColumn();
-        if ($count_email > 0) {
-            $error[] = 'Email  already exists.';
-        }
-
-        // Validating Phone Number
-
 
         $count_username = $sql = "SELECT count(*) FROM users WHERE userPhoneNumber=:userPhoneNumber";
         $stmt = $this->dbConnection->prepare($sql);
@@ -79,43 +56,48 @@
         }
 
 
-        // Validating Password
-        if ($userPassword == '') {
-            $error[] = 'Please enter the password';
+
+    
+        // Password validation
+        if ($userPassword === '') {
+            $error[] = 'Please enter your password';
+        } elseif ($cfmUserPassword === '') {
+            $error[] = 'Please confirm your password';
+        } elseif (!preg_match('/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{4,20}$/', $userPassword)) {
+            $error[] = 'Password must be strong and contain at least one alphabet, one numeric digit, and one special character from !@#$%^&*';
+        } elseif ($userPassword !== $cfmUserPassword) {
+            $error[] = 'Passwords do not match';
         }
-        if ($userPassword != '') {
-            if ($cfmUserPassword == '') {
-                $error[] = 'Please enter the confirm password';
-            }
+    
+        // Email validation
+        if ($emailid === '') {
+            $error[] = 'Please enter your email address';
+        } elseif (!filter_var($emailid, FILTER_VALIDATE_EMAIL)) {
+            $error[] = 'Invalid email address';
         }
 
-        if ($userPassword != $cfmUserPassword) {
-            $error[] = "Password don not match";
-        }
-
-        $sql = "SELECT count(*) from users WHERE username=:username";
+        $count_username = $sql = "SELECT count(*) FROM users WHERE emailid=:emailid";
         $stmt = $this->dbConnection->prepare($sql);
-        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $emailid, PDO::PARAM_STR);
         $stmt->execute();
-        $count_username = $stmt->fetchColumn();
 
-        if ($count_username > 0) {
-            $error[] = 'Username already exists';
+        $count_email = $stmt->fetchColumn();
+        if ($count_email > 0) {
+            $error[] = 'Email  already exists.';
         }
-
-
-
-        // password
-
-
-
-
-        if (isset($error)) {
+    
+        // Gender validation
+        if ($gender === '') {
+            $error[] = 'Please select your gender';
+        }
+    
+        if (!empty($error)) {
             return $error;
         } else {
-            return $arrayName = [];
+            return array();
         }
     }
+    
 
     public function resetPassValidation($userPassword,$cfmUserPassword,$tokenCheck){
         
