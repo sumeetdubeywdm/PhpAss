@@ -1,0 +1,7 @@
+user 1 - username -test
+        password - test
+        emailid - test@gmail.com
+
+user 2- username - dsumeet
+        password - 12345
+       
