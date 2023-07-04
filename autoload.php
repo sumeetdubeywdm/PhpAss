@@ -11,4 +11,6 @@ spl_autoload_register(function($className){
     $fetchUserDetails = new Fetch($db);
     $userForgotPassword = new ForgotPasswordCtrl($db);
     $updatedPassword = new ResetPassCtrl($db);
+    $updateProfile = new UpdatedprofileCtrl($db);
+    
 ?>
