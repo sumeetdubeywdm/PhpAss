@@ -11,7 +11,7 @@ use PHPMailer\PHPMailer\Exception;
 class  ForgotPasswordCtrl extends Basic
 {
 
-    public function resetpass($get_email,$token)
+    public function resetpass($get_email, $token)
     {
 
         try {
@@ -34,7 +34,7 @@ class  ForgotPasswordCtrl extends Basic
             $mail->setFrom('phptest912@gmail.com', 'PhpTest');
 
             //receiver email address and name
-            $mail->addAddress($get_email, '$get_username');
+            $mail->addAddress($get_email, '');
 
             // Add cc or bcc   
             // $mail->addCC('email@mail.com');  
@@ -44,17 +44,17 @@ class  ForgotPasswordCtrl extends Basic
             $mail->isHTML(true);
 
 
-            $mail->Subject = 'Forgot Password';
+            $mail->Subject = 'Reset Password Notification';
             $mail->Body = "
-                    <h2>Hello </h2>
-                    <h3>Reset Password link</h3>
+                    
+                    <h3>Reset Password link given below.</h3>
+                    <h3>Go to the link and reset your password.</h3>
                     <br/><br/>
                     <a href='http://php.dv/passwordreset.php?token=$token&email=$get_email'>Reset Password</a>
                     ";
 
 
             $mail->send();
-            
         } catch (Exception $e) {
             echo " Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
@@ -63,7 +63,7 @@ class  ForgotPasswordCtrl extends Basic
 
 
         // app password- crgzmlwntiyimrxb
-   
+
     }
 
 
@@ -71,12 +71,8 @@ class  ForgotPasswordCtrl extends Basic
     public function forgotpass($login_var)
     {
 
-        // $fetchUserDetails = new Fetch($db);
-        // $row=$fetchUserDetails->fetch_user(['userid']);
-        // $get_username = $row['username'];
 
         $login_var = $this->sanitize($login_var, 'string');
-        // $get_username = $this->sanitize($get_username, 'string');
         $token = md5(rand());
 
         $sql = "SELECT id,emailid from users WHERE emailid=:emailid limit 1";
@@ -84,14 +80,12 @@ class  ForgotPasswordCtrl extends Basic
         // $sql = "SELECT count(*) FROM users WHERE emailid=:emailid LIMIT 1";
         $stmt = $this->dbConnection->prepare($sql);
         $stmt->bindParam(':emailid', $login_var, PDO::PARAM_STR);
-        
+
         $stmt->execute();
         $count_user = $stmt->fetchColumn();
 
         if ($count_user > 0) {
 
-            // $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            // $get_username = $row['username'];
             $get_email = $login_var;
 
             $send_token = "UPDATE users SET verify_token = :token WHERE emailid = :emailid";
@@ -102,18 +96,12 @@ class  ForgotPasswordCtrl extends Basic
 
             if ($res) {
                 // sendPasswordReset($get_username,$get_email,$token);
-                $this->resetpass($get_email,$token);
-                echo '<div class="errormsg alert alert-success">we mailed password reset link.</div>';
+                $this->resetpass($get_email, $token);
+                echo "<div class=\"errormsg alert alert-success\">An email has been sent to you at $get_email. Kindly check the email.</div>";
             }
-
-
             return true;
         } else {
             return false;
         }
     }
-
-
-
-
 }

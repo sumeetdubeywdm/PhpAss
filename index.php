@@ -6,14 +6,14 @@ include('public/includes/navbar.php');
 ?>
 
 <?php
-        if (isset($_GET['register'])) {
-            echo '<p class="alert alert-success col-sm-6 text-center mx-auto mt-3" >You have successfully registered.</p>';
-        }
-        if (isset($_GET['logged_out'])) {
-            echo '<p class="alert alert-success col-sm-6 text-center mx-auto mt-3">You have logged out successfully!!.</p>';
-        }
+if (isset($_GET['register'])) {
+    echo '<p class="alert alert-success col-sm-6 text-center mx-auto mt-3" >You have successfully registered.</p>';
+}
+if (isset($_GET['logged_out'])) {
+    echo '<p class="alert alert-success col-sm-6 text-center mx-auto mt-3">You have logged out successfully!!.</p>';
+}
 
-        ?>
+?>
 
 <div class="py-5">
     <div class="container">
@@ -46,7 +46,7 @@ include('public/includes/navbar.php');
                     <div class="modal-header">
                         <p class="modal-title pb-2 pt-2 " id="popupModalLabel">Want to read more please Login</p>
                         <a href="login.php"><button type="submit" class="btn btn-primary btn-block mx-3" name="submit_form">Login</button></a>
-                    
+
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">

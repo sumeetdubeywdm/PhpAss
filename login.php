@@ -1,13 +1,12 @@
 <?php require_once('autoload.php');
-if($getUser->is_loggedin())
-{
-	header("location:index.php"); 
+if ($getUser->is_loggedin()) {
+    header("location:index.php");
 }
 include('public/includes/header.php');
 include('public/includes/navbar.php');
 ?>
 
-<?php 
+<?php
 if (isset($_GET['passwordupdated'])) {
     echo '<p class="alert alert-success col-sm-6 text-center mx-auto mt-3" >Password Updated successfully please login.</p>';
 }
@@ -18,7 +17,7 @@ if (isset($_GET['passwordupdated'])) {
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
-   
+
                     <div class="card-header text-center">
                         <h3>Login</h3>
                     </div>
@@ -34,9 +33,9 @@ if (isset($_GET['passwordupdated'])) {
                                 echo '<div class="errormsg alert alert-danger">Invalid login credentials ,Please try again .. </div>';
                             }
                         }
-                   
+
                         ?>
-                        <form action="" method="post"> 
+                        <form action="" method="post">
                             <h5 class="fw-normal pb-3 pt-2 text-center" style="letter-spacing: 1px;">Sign into your account</h5>
 
                             <div class="form-floating mb-3 col-sm-8 mx-auto">
@@ -61,7 +60,7 @@ if (isset($_GET['passwordupdated'])) {
                             </div>
 
 
-                            <p class="pb-lg-2 text-center" >Don't have an account? <a href="register.php" style="color: #393f81;">Register here</a></p>
+                            <p class="pb-lg-2 text-center">Don't have an account? <a href="register.php" style="color: #393f81;">Register here</a></p>
                         </form>
                     </div>
                 </div>

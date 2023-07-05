@@ -25,25 +25,23 @@ include('public/includes/navbar.php');
                             $userPassword = $_POST['userPassword'];
                             $cfmUserPassword = $_POST['cfmUserPassword'];
 
-                            $check = $getUser->resetPassValidation($userPassword, $cfmUserPassword,$tokenCheck);
+                            $check = $getUser->resetPassValidation($userPassword, $cfmUserPassword, $tokenCheck);
 
                             if ($check == NULL) {
-                                $result = $updatedPassword->resetPassword($userPassword, $tokenCheck,$login_var);
+                                $result = $updatedPassword->resetPassword($userPassword, $tokenCheck, $login_var);
                             }
 
                             if ($result) {
                                 header("location:login.php?passwordupdated=1");
-                            } else {
-                                $check[] = "Something went wrong...";
-                            }
+                            } 
 
                             if (isset($check)) {
                                 foreach ($check as $err) {
                                     echo '<p class = "errormsg alert alert-danger">' . $err . '</p>';
                                 }
+                            }else{
+                                header("location:login.php?passwordupdated=1");
                             }
-
-                           
                         }
                         ?>
 
@@ -55,18 +53,18 @@ include('public/includes/navbar.php');
                             <div class="form-floating mb-3 col-sm-8 mx-auto">
                                 <input type="text" name="login_var" value="<?php if (isset($_GET['email'])) {
                                                                                 echo $_GET['email'];
-                                                                            } ?>" class="form-control" id="floatingInput" placeholder="Email" required>
+                                                                            } ?>" class="form-control" id="floatingInput" placeholder="Email" readonly>
                                 <label for="floatingInput">Email</label>
                             </div>
 
 
                             <div class="form-floating mb-3 col-sm-8 mx-auto">
-                                <input type="password" name="userPassword" class="form-control" id="userPassword" placeholder="Password" required>
+                                <input type="password" name="userPassword" class="form-control" id="userPassword" placeholder="Password">
                                 <label for="floatingPassword">Password</label>
                             </div>
 
                             <div class="form-floating mb-3 col-sm-8 mx-auto">
-                                <input type="password" name="cfmUserPassword" class="form-control" id="cfmUserPassword " placeholder="ConfirmPassword" required>
+                                <input type="password" name="cfmUserPassword" class="form-control" id="cfmUserPassword " placeholder="ConfirmPassword" >
                                 <label for="floatingPassword">Confirm Password</label>
                             </div>
 

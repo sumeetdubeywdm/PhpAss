@@ -35,5 +35,3 @@ class Login extends Basic{
   
 
 }
-
-?>
