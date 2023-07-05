@@ -16,13 +16,20 @@ include('public/includes/navbar.php');
 	</div>
 		<div class="col-sm-6">
  <div class="form_container">
+
+ <?php
+        if (isset($_GET['updatechangessuccessfully'])) {
+            echo '<p class="alert alert-success col-sm-6 text-center mx-auto mt-3" >Profile updated successfully.</p>';
+        }
+
+        ?>
  	<?php 
   $row=$fetchUserDetails->fetch_user($_SESSION['userid']);
  	?>
  	<div class="row"> 
  		<div class="col-sm-3"></div>
  		<div class="col-sm-6" style="text-align:center;">Hi &#128075; <strong><?php echo $row['username'];?></strong></div>
- 		<div class="col-sm-3"> <a href="#"><span style="color:red;float: right;">Edit</span> </a></div>
+ 		<div class="col-sm-3"> <a href="editprofile.php"><span style="color:red;float: right;">Edit</span> </a></div>
 
  	</div>
  	<hr>

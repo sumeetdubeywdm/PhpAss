@@ -5,3 +5,5 @@ user 1 - username -test
 user 2- username - dsumeet
         password - 12345
        
+user 3- username - phptest
+        password - test@123
