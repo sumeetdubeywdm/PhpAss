@@ -51,6 +51,3 @@ return date('d M Y',strtotime($date));
 
 
 }
-
-
-?>

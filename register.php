@@ -1,8 +1,7 @@
 <?php require_once("autoload.php");
-// include('config.php');
-if($getUser->is_loggedin())
-{
-	header("location:index.php"); 
+
+if ($getUser->is_loggedin()) {
+    header("location:index.php");
 }
 include('public/includes/header.php');
 include('public/includes/navbar.php');
@@ -19,38 +18,36 @@ include('public/includes/navbar.php');
                     </div>
                     <div class="card-body">
 
-                    <?php
-if(isset($_POST['register_btn'])){
-    $fullname = $_POST['fullname'];
-    $username = $_POST['username'];
-    $emailid = $_POST['emailid'];
-    $userPhoneNumber = $_POST['userPhoneNumber'];
-    $gender = $_POST['gender'];
-    $userPassword = $_POST['userPassword'];
-    $cfmUserPassword = $_POST['cfmUserPassword'];
+                        <?php
+                        if (isset($_POST['register_btn'])) {
+                            $fullname = $_POST['fullname'];
+                            $username = $_POST['username'];
+                            $emailid = $_POST['emailid'];
+                            $userPhoneNumber = $_POST['userPhoneNumber'];
+                            $gender = $_POST['gender'];
+                            $userPassword = $_POST['userPassword'];
+                            $cfmUserPassword = $_POST['cfmUserPassword'];
 
-    $error=$getUser->validation($fullname,$username,$emailid,$userPhoneNumber,$gender,$userPassword,$cfmUserPassword);
-   
-    if($error == NULL){
-    $result=$newUserRegistration->register($fullname,$username,$emailid,$userPhoneNumber,$gender,$userPassword);
+                            $error = $getUser->validation($fullname, $username, $emailid, $userPhoneNumber, $gender, $userPassword, $cfmUserPassword);
 
-    if($result){
-        header("location:index.php?register=1");
-       
-    }
-    else{
-        $error[] = "Something went wrong...";
-    }   
-    }
+                            if ($error == NULL) {
+                                $result = $newUserRegistration->register($fullname, $username, $emailid, $userPhoneNumber, $gender, $userPassword);
+
+                                if ($result) {
+                                    header("location:index.php?register=1");
+                                } else {
+                                    $error[] = "Something went wrong...";
+                                }
+                            }
 
 
-    if(isset($error)){
-        foreach($error as $err){
-            echo '<p class = "errormsg alert alert-danger">'.$err.'</p>';
-        }
-    }
-}
-                    ?>
+                            if (isset($error)) {
+                                foreach ($error as $err) {
+                                    echo '<p class = "errormsg alert alert-danger">' . $err . '</p>';
+                                }
+                            }
+                        }
+                        ?>
                         <form action="" method="POST">
                             <div class="form-group row mb-4">
                                 <label for="fullname" class="col-sm-3 col-form-label">Name</label>
@@ -61,7 +58,7 @@ if(isset($_POST['register_btn'])){
                             <div class="form-group row mb-4">
                                 <label for="username" class="col-sm-3 col-form-label">Username</label>
                                 <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="username" name="username"  placeholder="Create your Username">
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Create your Username">
                                 </div>
                             </div>
                             <div class="form-group row mb-4">
@@ -73,11 +70,11 @@ if(isset($_POST['register_btn'])){
                             <div class="form-group row mb-4">
                                 <label for="user-phone-number" class="col-sm-3 col-form-label">Phone</label>
                                 <div class="col-sm-2">
-                                <div class="india-ctr-code">
+                                    <div class="india-ctr-code">
                                         <span class="input-group-text" id="india-ctr-code">+91</span>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-sm-7">
                                     <input type="tel" class="form-control" id="user-phone-number" name="userPhoneNumber" placeholder="Enter your Number">
                                 </div>

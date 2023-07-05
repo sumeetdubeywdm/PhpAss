@@ -41,7 +41,7 @@
         // Phone number validation
         if ($userPhoneNumber === '') {
             $error[] = 'Please enter your phone number';
-        } elseif (!preg_match('/^(?:\+91|0)?[1-9][0-9]{9}$/', $userPhoneNumber)) {
+        } elseif (!preg_match('/^[0-9]{10}$/', $userPhoneNumber)) {
             $error[] = 'Invalid phone number format. Please enter a valid Indian mobile number.';
         }
 
