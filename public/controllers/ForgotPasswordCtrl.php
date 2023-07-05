@@ -11,7 +11,7 @@ use PHPMailer\PHPMailer\Exception;
 class  ForgotPasswordCtrl extends Basic
 {
 
-    public function resetpass($get_email,$token)
+    public function resetpass($get_email, $token)
     {
 
         try {
@@ -55,7 +55,6 @@ class  ForgotPasswordCtrl extends Basic
 
 
             $mail->send();
-            
         } catch (Exception $e) {
             echo " Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
@@ -64,7 +63,7 @@ class  ForgotPasswordCtrl extends Basic
 
 
         // app password- crgzmlwntiyimrxb
-   
+
     }
 
 
@@ -81,7 +80,7 @@ class  ForgotPasswordCtrl extends Basic
         // $sql = "SELECT count(*) FROM users WHERE emailid=:emailid LIMIT 1";
         $stmt = $this->dbConnection->prepare($sql);
         $stmt->bindParam(':emailid', $login_var, PDO::PARAM_STR);
-        
+
         $stmt->execute();
         $count_user = $stmt->fetchColumn();
 
@@ -97,19 +96,12 @@ class  ForgotPasswordCtrl extends Basic
 
             if ($res) {
                 // sendPasswordReset($get_username,$get_email,$token);
-                $this->resetpass($get_email,$token);
+                $this->resetpass($get_email, $token);
                 echo "<div class=\"errormsg alert alert-success\">An email has been sent to you at $get_email. Kindly check the email.</div>";
-
             }
-
-
             return true;
         } else {
             return false;
         }
     }
-
-
-
-
 }

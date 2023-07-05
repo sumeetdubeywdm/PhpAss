@@ -14,5 +14,3 @@ class Fetch extends Basic{
   
 
 }
-
-?>

@@ -34,5 +34,3 @@ class Register extends Basic{
 
    
 }
-
-?>

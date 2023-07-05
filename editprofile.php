@@ -25,11 +25,12 @@ include('public/includes/navbar.php');
                             $username = $_POST['username'];
                             $emailid = $_POST['emailid'];
                             $userPhoneNumber = $_POST['userPhoneNumber'];
+                            $gender = $_POST['gender'];
 
-                            $error = $updateProfile->profileValidation($fullname, $username, $emailid, $userPhoneNumber);
+                            $error = $updateProfile->profileValidation($fullname, $username, $emailid, $userPhoneNumber, $gender);
 
                             if ($error == NULL) {
-                                $result = $updateProfile->saveProfileChanges($fullname, $username, $emailid, $userPhoneNumber);
+                                $result = $updateProfile->saveProfileChanges($fullname, $username, $emailid, $userPhoneNumber, $gender);
 
                                 if ($result) {
                                     header("location:profile.php?updatechangessuccessfully=1");
@@ -77,6 +78,26 @@ include('public/includes/navbar.php');
                                     <input type="tel" class="form-control" id="user-phone-number" name="userPhoneNumber" placeholder="Enter your Number" value="<?php echo $row['userPhoneNumber']; ?>">
                                 </div>
                             </div>
+                            <fieldset class="form-group mb-4">
+                                <div class="row">
+                                    <legend class="col-form-label col-sm-3 pt-0">Gender</legend>
+                                    <div class="col-sm-9">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gender" id="male-radio" value="Male" <?php echo ($row['gender'] === 'Male') ? 'checked' : ''; ?>>
+                                            <label class="form-check-label" for="male-radio">
+                                                Male
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gender" id="female-radio" value="Female" <?php echo ($row['gender'] === 'Female') ? 'checked' : ''; ?>>
+                                            <label class="form-check-label" for="female-radio">
+                                                Female
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+
 
 
                             <div class="form-group row mb-4 text-center">

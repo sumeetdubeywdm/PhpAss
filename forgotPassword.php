@@ -1,7 +1,6 @@
 <?php require_once("autoload.php");
-if($getUser->is_loggedin())
-{
-	header("location:index.php"); 
+if ($getUser->is_loggedin()) {
+    header("location:index.php");
 }
 include('public/includes/header.php');
 include('public/includes/navbar.php');
@@ -18,25 +17,28 @@ include('public/includes/navbar.php');
                         <h4>Forgot Password</h4>
                     </div>
                     <div class="card-body">
-                    <?php
+                        <?php
                         if (isset($_POST['submitForgotPassword'])) {
                             $login_var = $_POST['login_var'];
 
-                          
+
                             $check = $userForgotPassword->forgotpass($login_var);
-                            if ($check) {
-                               
-                                // echo '<div class="errormsg alert alert-success">success</div>';
-                            } else {
+                            // if ($check) {
+
+                            //     // echo '<div class="errormsg alert alert-success">success</div>';
+                            // } else {
+                            //     echo '<div class="errormsg alert alert-danger">No Email found!!! </div>';
+                            // }
+                            if(!$check){
                                 echo '<div class="errormsg alert alert-danger">No Email found!!! </div>';
                             }
                         }
-                   
+
                         ?>
-                        <form action="" method="post"> 
+                        <form action="" method="post">
 
                             <div class="form-floating mb-3 col-sm-8 mx-auto">
-                                <input type="text" name="login_var"  class="form-control" id="floatingInput" placeholder="Enter your Email id" required>
+                                <input type="text" name="login_var" class="form-control" id="floatingInput" placeholder="Enter your Email id" required>
                                 <label for="floatingInput"> Enter your Email</label>
                             </div>
 
